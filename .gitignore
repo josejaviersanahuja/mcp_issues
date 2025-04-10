@@ -1,0 +1,29 @@
+# Logs
+logs/
+*.log
+
+# Entorno
+.env
+.env.*
+
+# Sistema
+.DS_Store
+Thumbs.db
+
+# Compilados / Caché Deno
+deno.lock
+deno-dir/
+target/
+
+# Editor/IDE
+.vscode/
+.idea/
+*.swp
+
+# Archivos temporales
+*.bak
+*.tmp
+*.old
+
+# Test outputs
+coverage/

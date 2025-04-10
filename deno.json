@@ -1,0 +1,10 @@
+{
+  "tasks": {
+    "start": "deno run --allow-net --allow-read --allow-env src/client/index.ts",
+    "resources": "deno run --allow-net --allow-read --allow-env src/servers/fs-resources/index.ts"
+  },
+  "imports": {
+    "oak": "https://deno.land/x/oak@v12.6.1/mod.ts",
+    "dotenv": "https://deno.land/x/dotenv@v3.2.2/mod.ts"
+  }
+}
