@@ -3,14 +3,14 @@
 import { Application } from "oak";
 import { config } from "dotenv";
 import rpcRouter from "./routes/rpc.routes.ts";
+
 await config();
 
-const PORT = Deno.env.get("FS_RESOURCES_PORT") || 8001;
+const PORT = Number(Deno.env.get("FS_RESOURCES_PORT") ?? 8001);
 
 const app = new Application();
 
-app.use(rpcRouter.routes());
-app.use(rpcRouter.allowedMethods());
+// Error handler - siempre lo primero
 app.use(async (ctx, next) => {
   try {
     await next();
@@ -21,6 +21,7 @@ app.use(async (ctx, next) => {
   }
 });
 
+// Logger - siempre antes de las rutas
 app.use(async (ctx, next) => {
   const start = Date.now();
   await next();
@@ -28,5 +29,12 @@ app.use(async (ctx, next) => {
   console.log(`${ctx.request.method} ${ctx.request.url} - ${ms}ms`);
 });
 
-console.log(`✅ MCP Server (FS Resources) running on port ${PORT}`);
-await app.listen({ port: parseInt(PORT as string) });
+// Rutas principales
+app.use(rpcRouter.routes());
+app.use(rpcRouter.allowedMethods());
+
+// Arrancar el servidor solo si es ejecutado directamente
+if (import.meta.main) {
+  console.log(`✅ MCP FS Resources Server listening on http://localhost:${PORT}`);
+  await app.listen({ port: PORT });
+}
