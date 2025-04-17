@@ -38,3 +38,5 @@ if (import.meta.main) {
   console.log(`✅ MCP FS Resources Server listening on http://localhost:${PORT}`);
   await app.listen({ port: PORT });
 }
+
+export default app
